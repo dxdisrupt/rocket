@@ -6,9 +6,9 @@
 
 The compressed air rocket used here is based on the one presented by Make Magazine in **[How-to: Building a compressed air rocket launcher] (http://makezine.com/2010/07/11/how-to-building-the-compressed-air/)**
 
-You can make your own rockets using a legal sheet of paper, some napkins (to add support to the nose cone), and copious amounts of tape.  Get the template here: [Rocket_Template.pdf](Rocket_Template.pdf)
+You can make your own rockets using a legal sheet of paper, some napkins (to add support to the nose cone), and copious amounts of tape.  Get the template here: [Rocket_Template.pdf](Rocket_Template.pdf?raw=true)
 
-There is an alternate set of instructions for the rocket launcher with more complete instructions on creating the paper rockets here: http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf .  A copy of the PDF is also included in this repository here: [compressedairrocket.pdf](compressedairrocket.pdf)
+There is an alternate set of instructions for the rocket launcher with more complete instructions on creating the paper rockets here: http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf .  A copy of the PDF is also included in this repository here: [compressedairrocket.pdf](compressedairrocket.pdf?raw=true)
 
 <a name="inventory" />
 ## Inventory ##
