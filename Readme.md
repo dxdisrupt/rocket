@@ -24,6 +24,10 @@ There is an alternate set of instructions for the rocket launcher with more comp
 7. Manual Firing Button & 9v Power Supply
 8. Spark Core & Relay Board
 
+The following schematic gives you the basics of the eletronics although the schematic isn't exact.  It was built in [Fritzing](fritizing.org) and there is not current a fritzing part for the Spark IO Relay Shield, so the connections have been approximated here:
+
+![00005-Fritzing](images/00005-fritzing.png?raw=true "Fritzing")
+
 --- 
 
 <a name="tasks" />
