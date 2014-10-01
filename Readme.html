@@ -11,13 +11,17 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <div class="markdown-body">
 <p><a name="Title"></a></p>
 
-<h1 id="Rocket_Setup">Rocket Setup</h1>
+<h1 id="Compressed_Air_Rocket_and_Spark_Core_Setup">Compressed Air Rocket and Spark Core Setup</h1>
 
 <p><a name="overview"></a></p>
 
 <h2 id="Overview">Overview</h2>
 
 <p>The compressed air rocket used here is based on the one presented by Make Magazine in <strong><a href="http://makezine.com/2010/07/11/how-to-building-the-compressed-air/">How-to: Building a compressed air rocket launcher</a></strong></p>
+
+<p>You can make your own rockets using a legal sheet of paper, some napkins (to add support to the nose cone), and copious amounts of tape.  Get the template here: <a href="Rocket_Template.pdf">Rocket_Template.pdf</a></p>
+
+<p>There is an alternate set of instructions with more complete instructions on creating the paper rockets here: <a href="http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf">http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf</a> .  A copy of the PDF is also included in this repository here: <a href="compressedairrocket.pdf">compressedairrocket.pdf</a></p>
 
 <p><a name="inventory"></a></p>
 
@@ -37,6 +41,8 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <li>Spark Core &amp; Relay Board</li>
 </ol>
 
+<hr>
+
 <p><a name="tasks"></a></p>
 
 <h2 id="Tasks">Tasks</h2>
@@ -44,9 +50,11 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <ol>
 <li><a href="#Task1">Assembling the Rocket</a></li>
 <li><a href="#Task2">Installing the Spark Core Windows USB Driver</a></li>
-<li><a href="#Task2">Programming the Spark Core</a></li>
-<li><a href="#Task3">Configuring the Spark Core</a></li>
-<li><a href="#Task4">Testing the Spark Core</a></li>
+<li><a href="#Task3">Installing the Spark-CLI</a></li>
+<li><a href="#Task4">Configuring WiFi for a Pre-Programmed Spark Core</a></li>
+<li><a href="#Task5">Flashing the relayWidget Sketch</a></li>
+<li><a href="#Task6">Identifying your Spark Core</a></li>
+<li><a href="#Task6">Testing the Spark Core</a></li>
 </ol>
 
 <hr>
@@ -101,7 +109,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <blockquote>
 <p><strong>Note:</strong> You can also refer to the documentation for <a href="http://docs.spark.io/connect/#connecting-your-core-connect-over-usb">Connecting to the Spark Core via USB</a></p>
 </blockquote></li>
-<li><p>Connect the Spark Core to your computer via the USB, and ensure that the Spark Core is in <strong>&quot;Listening Mode&quot;</strong> by confirming that the RGB LED on the board is flashing blue.  If it isn't, hold the <strong>&quot;MODE&quot;</strong> button on the Spark Core for about three seconds until it begins flashing:</p>
+<li><p>Connect the Spark Core to your computer via the USB, and ensure that the Spark Core is in **&quot;<a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">Listening Mode</a>&quot;** by confirming that the RGB LED on the board is flashing blue.  If it isn't, <a href="https://vine.co/v/hFHlpBDELeU">hold the <strong>&quot;MODE&quot;</strong> button on the Spark Core for about three seconds until it begins flashing</a>:</p>
 
 <p><img src="images/02005-listeningmode.png?raw=true" alt="02005-ListeningMode" title="Listening Mode">
 </p></li>
@@ -129,127 +137,336 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <p><img src="images/02060-sparkoncomport.png?raw=true" alt="02060-SparkOnComPort" title="Spark Core on COM Port">
 </p></li>
+<li><p>At this point, if you were to use a terminal program (Like <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a>) you could connect to the Spark Core via serial and issue <a href="http://docs.spark.io/connect/#connecting-your-core-connect-over-usb">some commands</a>.  However, the Spark Command Line Interfac e (Spark-CLI) offers significantly more functionality, so we'll use that.  </p></li>
 </ol>
-
-<p>This documentation was written with the Spark-CLI version 0.4.1.  If you already have the Spark-CLI installed, you can determine its version using the following command:</p>
-
-<p><code>npm list -g spark-cli</code></p>
-
-<p><img src="images/02010-sparkcliversion.png?raw=true" alt="02010-SparkCliVersion" title="SparkCliVersion">
-</p>
-
-<p>In addition, you can always upgrade to the latest version of the Spark-CLI using the command: </p>
-
-<p><code>npm update -g spark-cli</code></p>
-
-<p><a name="Task2"></a></p>
-
-<h2 id="Programming_the_Spark_Core">Programming the Spark Core</h2>
-
-<p>If your spark core has not been claimed, and programmed with the &quot;relayWidget&quot; sketch, you will first need to claim your Spark Core, and deploy the code to it.  </p>
-
-<ol>
-<li><p>Follow the instructions to first <a href="http://docs.spark.io/connect/">connect your core</a>, and then to <a href="http://docs.spark.io/connect/#claiming-your-core">claim your core</a></p></li>
-<li><p>Use the Spark.IO web UI to deploy the following code to your Spark: </p></li>
-</ol>
-
-<span class="codelanguage">C++</span><pre><code class="C++"><span style="color:#0000FF">int</span> relayPin[4] = {D0,D1,D2,D3};
-
-<span style="color:#0000FF">int</span> relayState[4] = {LOW,LOW,LOW,LOW};
-
-<span style="color:#0000FF">void</span> setup()
-{
-   <span style="color:#008000">//Initilize the relay control pins as output, and their state</span>
-   <span style="color:#0000FF">for</span>(<span style="color:#0000FF">int</span> r = 0; r &lt;= 3; r++)
-   {
-       pinMode(relayPin[r], OUTPUT);
-       digitalWrite(relayPin[r],relayState[r]);
-   }
-
-   <span style="color:#008000">//register the cycle relay function</span>
-   Spark.function(<span style="color:#8B0000">&quot;cycleRelay&quot;</span>, cycleRelay);
-
-   Serial.begin(9600);
-}
-
-<span style="color:#0000FF">void</span> loop()
-{
-   <span style="color:#008000">// This loops for ever</span>
-}
-
-<span style="color:#0000FF">int</span> cycleRelay(String command)
-{
-    Serial.print(<span style="color:#8B0000">&quot;command: &quot;</span>);
-    Serial.println(command);    
-    <span style="color:#008000">//parse the relay number, minus 1 because pin #s start at 0</span>
-    <span style="color:#0000FF">int</span> relayNumber = command.charAt(1) - &#39;0&#39; - 1;
-    <span style="color:#008000">//do a sanity check, if we didn&#39;t get a good number, exit</span>
-    <span style="color:#0000FF">if</span>(relayNumber &lt; 0 || relayNumber &gt; 3) {
-      Serial.print(<span style="color:#8B0000">&quot;Relay # not good:&quot;</span>);
-      Serial.println(relayNumber);
-      <span style="color:#0000FF">return</span> -1;
-    }
-
-    Serial.print(<span style="color:#8B0000">&quot;Relay Number: &quot;</span>);
-    Serial.println(relayNumber);
-
-    <span style="color:#008000">//next, get the delay, if none, default to 100ms</span>
-    <span style="color:#0000FF">int</span> pause=100;
-    <span style="color:#0000FF">int</span> comma = command.indexOf(&#39;,&#39;);
-    <span style="color:#0000FF">if</span>(comma &gt; -1) {
-      String pauseString = command.substring(comma+1, command.length());
-      Serial.print(<span style="color:#8B0000">&quot;pauseString: &quot;</span>);
-      Serial.println(pauseString);
-      pause = pauseString.toInt(); 
-    }
-
-
-    Serial.print(<span style="color:#8B0000">&quot;comma: &quot;</span>);
-    Serial.print(comma);
-    Serial.print(<span style="color:#8B0000">&quot; relay: &quot;</span>);
-    Serial.print(relayNumber);
-    Serial.print(<span style="color:#8B0000">&quot; delay: &quot;</span>);
-    Serial.println(pause);
-
-    toggleRelay(relayNumber);
-    delay(pause);
-    toggleRelay(relayNumber);
-
-    <span style="color:#0000FF">return</span> 1;
-}
-
-<span style="color:#0000FF">void</span> toggleRelay(<span style="color:#0000FF">int</span> relay) {
-    relayState[relay] = (relayState[relay] == HIGH) ? LOW : HIGH;
-    digitalWrite(relayPin[relay],relayState[relay]);
-}
-</code></pre>
 
 <hr>
 
 <p><a name="Task3"></a></p>
 
-<h2 id="Configuring_the_Spark_Core">Configuring the Spark Core</h2>
+<h2 id="Installing_the_Spark-CLI">Installing the Spark-CLI</h2>
+
+<p>The Spark Command Line Interface (Spark-CLI) is a Node.js application that allows you to manage your spark cores, and the code that runs on them.  The Spark-CLI source is available from GitHub at <a href="https://github.com/spark/spark-cli">https://github.com/spark/spark-cli</a> and you can read the docs here: <a href="http://docs.spark.io/cli/">http://docs.spark.io/cli/</a></p>
 
 <ol>
-<li><p>Make sure that you have installed the Windows Driver for Spark Core: <a href="https://s3.amazonaws.com/spark-website/Spark.zip">https://s3.amazonaws.com/spark-website/Spark.zip</a></p></li>
-<li><p>Install the Spark Command Line tools <a href="http://docs.spark.io/cli/">using these instructions</a></p></li>
-<li><p>Connect your Spark Core to your PC via USB</p></li>
-<li><p>Ensure the Spark Core is in <a href="http://docs.spark.io/connect/">Listening Mode</a> by pressing the <strong>&quot;MODE&quot;</strong> button for three seconds, until the led begins to flash blue.</p></li>
-<li><p>From a command prompt, run <strong>&quot;spark setup wifi&quot;</strong> and follow the prompts to configure the WiFi connection you want the spark to use </p>
+<li><p>First, ensure that you have Node.js installed.  You can install it from here: <a href="http://nodejs.org/">http://nodejs.org/</a></p>
 <blockquote>
-<p><strong>Note:</strong> Some MiFi adapters, and other networks take the user to a start screen on the first load.  If connecting to your mifi, the Spark might fail to connect the FIRST time.  Try cycling the power on your Spark Core to get it to restart and connect.  </p>
-</blockquote>
-<p><img src="images/03010-sparksetupwifi.png?raw=true" alt="03010-SparkSetupWifi" title="spark setup wifi">
+<p><strong>Note:</strong> It helps if you let the installer install the Node Package Manager (npm) as well as to add Node to the system path.  If you add node the path, you can use node from any Windows Command Prompt. </p>
+</blockquote></li>
+<li><p>To install the Spark-CLI using node, you can open a Node.js Command Prompt (or any command administrator prompt if you allowed the Node.js installer to add Node to the path) and issue the following command:</p>
+
+<p><code>npm install -g spark-cli</code></p>
+
+<p><img src="images/03010-installsparkcli.png?raw=true" alt="03010-InstallSparkCLI" title="Install Spark-CLI">
 </p></li>
+<li><p>This documentation was written with the Spark-CLI version 0.4.1.  If you already have the Spark-CLI installed, you can determine its version using the following command:</p>
+
+<p><code>npm list -g spark-cli</code></p>
+
+<p><img src="images/03020-sparkcliversion.png?raw=true" alt="03020-SparkCliVersion" title="SparkCliVersion">
+</p></li>
+<li><p>In addition, you can always upgrade to the latest version of the Spark-CLI using the command: </p>
+
+<p><code>npm update -g spark-cli</code></p></li>
 </ol>
 
 <hr>
 
 <p><a name="Task4"></a></p>
 
-<h2 id="Testing_the_Spark_Core">Testing the Spark Core</h2>
+<h2 id="Configuring_WiFi_for_a_Pre-Programmed_Spark_Core">Configuring WiFi for a Pre-Programmed Spark Core</h2>
+
+<p><span style="color: #900; font-weight: bold">IF YOU ARE ADDING YOUR OWN SPARK CORE, OR NEED TO RE-PROGRAM AN EXISTING SPARK CORE, SKIP THIS STEP AND GO TO <a href="#Task5">Programming a new Spark Core</a></span></p>
+
+<p>If you received a rocket, with a Spark Core that has been pre-programmed, a Relay Board, and everything already connected, you only need to configure the Spark Core to connect to your local WiFi.</p>
+
+<ol>
+<li><p>Connect the Spark Core to your PC via USB, and place the Spark Core into <strong>&quot;<a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">Listening Mode</a>&quot;</strong> by holding down the <strong>&quot;Mode&quot;</strong> button on the spark core until the RGB LED flashes blue. </p></li>
+<li><p>Open a Node Command Prompt, and issue the following command </p>
+
+<p><code>spark setup wifi</code></p></li>
+<li><p>Follow the prompts to configure the Spark Core for your WiFi network.  </p>
+<blockquote>
+<p><strong>Note:</strong> Some MiFi wifi hot sports (like my Verizon MiFi), and other networks take the user to a start screen on the first load.  If connecting to your mifi, the Spark might fail to connect the first time.  Try cycling the power on your Spark Core to get it to restart and connect.  If the WiFi network you are connecting to requires a browser based authentication process, you won't be able to connect your Spark Core to it.  You must know the WiFi SSID, Security Mode, and Password.  </p>
+</blockquote>
+<p><img src="images/04010-sparksetupwifi.png?raw=true" alt="04010-SparkSetupWifi" title="spark setup wifi">
+</p></li>
+<li><p>When the WiFi setup is complete, you should see the RGB LED on the Spark Core &quot;Breathing Cyan&quot;.  This means that <a href="https://vine.co/v/OmOAlMg17Y9">it should have a cyan color (light blue) and should repeatedly fade in and out.</a> </p></li>
+</ol>
 
 <hr>
+
+<p><a name="Task5"></a></p>
+
+<h2 id="Flashing_the_relayWidget_Sketch">Flashing the relayWidget Sketch</h2>
+
+<p><span style="color: #090; font-weight: bold">If your spark core is already programmed with the relayWidget Sketch, you can skip this step</span></p>
+
+<p><span style="color: #900; font-weight: bold">If your Spark Core has not been &quot;claimed&quot;, you need to do that first.</span> </p>
+
+<p><span style="color: #900; font-weight: bold">If the Spark Core you want to program has already been claimed by another account, you will have to have that account owner remove the core before you can claim it:</span></p>
+
+<p><code>spark core remove &lt;core name / core id&gt;</code></p>
+
+<p><span style="color: #900; font-weight: bold">If your Spark Core is new, or is available to be claimed you can use the Spark-CLI commands:</span></p>
+
+<pre><code>spark cloud login
+spark setup
+</code></pre>
+
+<p><span style="color: #900; font-weight: bold">You can find the instructions for connecting and claiming a core here: <a href="http://docs.spark.io/connect/">http://docs.spark.io/connect/</a></span></p>
+
+<p>The <strong>&quot;relayWidget&quot;</strong> sketch (app) we use below is used to drive a Spark Core that is connected to a Spark <a href="http://docs.spark.io/shields/#relay-shield">Relay Shield</a>.  The relay shield makes it simple for a single Spark Core to control up to four other circuits.  In our case, with the rocket, we only need a single circuit.  We'll use the first relay (connected to digital pin D0) to override the manual push-button switch on our compressed air rocket.  We connect the <strong>&quot;Common&quot;</strong> (COMM) and <strong>&quot;Normaly Open&quot;</strong> (NO) ports on the first relay accross the swtich.  Then we we use the Spark Core to drive the pin (D0) HIGH, it &quot;closes&quot; the switch, which supplies the voltage to the solenoid on the Sprinkler Valve and launches the rocket.  Cool! </p>
+
+<p>Our relayWidget sketch publishes a single function called <strong>&quot;cycleRelay&quot;</strong> via the Spark cloud.  The <strong>&quot;cycleRelay&quot;</strong> function is used to toggle the state of a relay, pause for a given time, then toggle it back.  We'll use that to turn the relay &quot;on&quot; for a time, then back off (so it is ready to fire again).  The cycleRelay takes a single string argument in the form of &quot;r#,delay&quot; where &quot;#&quot; is the relay number (1,2,3,4), and &quot;delay&quot; is the number of milliseconds to wait before toggeling the state back.  We want to send a &quot;command&quot; string of &quot;r1,5000&quot; to toggle the state first relay on (really D0), wait for five seconds, then toggle it back off. </p>
+
+<p>You could use this sketch to control anything connected to the relay board, and you could publish other functions that turn relays on or off specifically, rather than just cycling them from off to on and back off again. </p>
+
+<ol>
+<li><p>Login to the <a href="https://www.spark.io/login">Spark Build</a> web development environment with your Spark.IO credentials (the same credentials you used to claim your Spark Core): <a href="https://www.spark.io/login">https://www.spark.io/login</a> </p></li>
+<li><p>If this isn't your first sketch, click the <strong>&quot;CREATE NEW APP&quot;</strong> button:</p>
+
+<p><img src="images/05010-createnewapp.png?raw=true" alt="05010-CreateNewApp" title="Create New App Button">
+</p></li>
+<li><p>When prompted, enter <strong>&quot;relayWidget&quot;</strong> as the name for your new app:</p>
+
+<p><img src="images/05020-createrelaywidget.png?raw=true" alt="05020-CreateRelayWidget" title="Create relayWidget app">
+</p>
+<blockquote>
+<p><strong>Note:</strong> You can also get this code from the <a href="./relayWidget/relayWidget.ino">relayWidget.ino</a> code file</p>
+
+<p><strong>Note:</strong> although the sketch has a <strong>.ino</strong> extension, you <strong><em>can't compile and deploy</em></strong> this to the Spark Core using the Arduino IDE.  You need to use either the Spark web interface, or the <a href="http://docs.spark.io/cli">Spark-CLI</a> to compile and flash this code onto your Spark Core.  </p>
+</blockquote></li>
+<li><p>Paste the following code into the code window:</p>
+
+<span class="codelanguage">C++</span><pre><code class="C++"><span style="color:#0000FF">int</span> relayPin[4] = {D0,D1,D2,D3};
+<span style="color:#0000FF">int</span> builtinLed = D7;
+
+<span style="color:#0000FF">int</span> relayState[4] = {LOW,LOW,LOW,LOW};
+
+<span style="color:#0000FF">void</span> setup()
+{
+    <span style="color:#008000">//Initilize the relay control pins as output, and their state</span>
+    <span style="color:#0000FF">for</span>(<span style="color:#0000FF">int</span> r = 0; r &lt;= 3; r++)
+    {
+         pinMode(relayPin[r], OUTPUT);
+         digitalWrite(relayPin[r],relayState[r]);
+    }
+
+    <span style="color:#008000">//Setup the builtinLed for output</span>
+    pinMode(builtinLed,OUTPUT);
+    <span style="color:#008000">//and make sure it is off...</span>
+    digitalWrite(builtinLed, LOW);
+
+    <span style="color:#008000">//register the cycle relay function</span>
+    Spark.function(<span style="color:#8B0000">&quot;cycleRelay&quot;</span>, cycleRelay);
+
+    Serial.begin(9600);
+}
+
+<span style="color:#0000FF">void</span> loop()
+{
+    <span style="color:#008000">// This loops for ever</span>
+}
+
+<span style="color:#0000FF">int</span> cycleRelay(String command)
+{
+     Serial.print(<span style="color:#8B0000">&quot;command: &quot;</span>);
+     Serial.println(command);    
+     <span style="color:#008000">//parse the relay number, minus 1 because pin #s start at 0</span>
+     <span style="color:#0000FF">int</span> relayNumber = command.charAt(1) - &#39;0&#39; - 1;
+     <span style="color:#008000">//do a sanity check, if we didn&#39;t get a good number, exit</span>
+     <span style="color:#0000FF">if</span>(relayNumber &lt; 0 || relayNumber &gt; 3) {
+        Serial.print(<span style="color:#8B0000">&quot;Relay # not good:&quot;</span>);
+        Serial.println(relayNumber);
+        <span style="color:#0000FF">return</span> -1;
+     }
+
+     Serial.print(<span style="color:#8B0000">&quot;Relay Number: &quot;</span>);
+     Serial.println(relayNumber);
+
+     <span style="color:#008000">//next, get the delay, if none, default to 100ms</span>
+     <span style="color:#0000FF">int</span> pause=100;
+     <span style="color:#0000FF">int</span> comma = command.indexOf(&#39;,&#39;);
+     <span style="color:#0000FF">if</span>(comma &gt; -1) {
+        String pauseString = command.substring(comma+1, command.length());
+        Serial.print(<span style="color:#8B0000">&quot;pauseString: &quot;</span>);
+        Serial.println(pauseString);
+        pause = pauseString.toInt(); 
+     }
+
+     Serial.print(<span style="color:#8B0000">&quot;comma: &quot;</span>);
+     Serial.print(comma);
+     Serial.print(<span style="color:#8B0000">&quot; relay: &quot;</span>);
+     Serial.print(relayNumber);
+     Serial.print(<span style="color:#8B0000">&quot; delay: &quot;</span>);
+     Serial.println(pause);
+
+     toggleRelay(relayNumber);
+     delay(pause);
+     toggleRelay(relayNumber);
+
+     <span style="color:#0000FF">return</span> 1;
+}
+
+<span style="color:#0000FF">void</span> toggleRelay(<span style="color:#0000FF">int</span> relay) {
+     relayState[relay] = (relayState[relay] == HIGH) ? LOW : HIGH;
+     digitalWrite(relayPin[relay],relayState[relay]);
+     <span style="color:#008000">//Toggle the builtin LED on the board as well</span>
+     <span style="color:#008000">//This is just to help somebody test their Spark Core</span>
+     <span style="color:#008000">//if it isn&#39;t currently connected to a Relay Board</span>
+     digitalWrite(builtinLed,relayState[relay]);
+}
+</code></pre></li>
+<li><p>Click the <strong>&quot;Save&quot;</strong> button (looks like a folder, dont' ask me why) to save the sketch:</p>
+
+<p><img src="images/05030-savesketch.png?raw=true" alt="05030-SaveSketch" title="Save Sketch">
+</p></li>
+<li><p>You can then <strong>&quot;Verify&quot;</strong> your sketch:</p>
+
+<p><img src="images/05040-verify.png?raw=true" alt="05040-Verify" title="Verify Code">
+</p></li>
+<li><p>If you have claimed multiple cores with your account, make sure that the correct Spark Core is set as the target, by choosing the <strong>&quot;Cores&quot;</strong> option along the left, then clicking on the <strong>&quot;Star&quot;</strong> icon next to the core you want to flash: </p>
+
+<p><img src="images/05050-selectcore.png?raw=true" alt="05050-SelectCore" title="Select Core">
+</p></li>
+<li><p>Finally, you can flash the code to your core: </p>
+
+<p><img src="images/05060-flashcore.png?raw=true" alt="05060-FlashCore" title="Flash Core">
+</p></li>
+<li><p>You know your core is ready when it is once again &quot;<a href="https://vine.co/v/OmOAlMg17Y9">breathing cyan</a>&quot;.</p></li>
+</ol>
+
+<hr>
+
+<p><a name="Task6"></a></p>
+
+<h2 id="Identifying_your_Spark_Core">Identifying your Spark Core</h2>
+
+<p><span style="color: #900; font-weight: bold">If the Spark Caore you are using has been claimed by another account, you will need that account owner to supply you with your device's Core ID and Access Token</span></p>
+
+<p>Before you can call the cycleRelay function on your Spark Core, you need to know </p>
+
+<ul>
+<li>The Spark Core's Core ID</li>
+<li>The Access Token for your account</li>
+</ul>
+
+<p>We'll walk through finding both of those here.</p>
+
+<ol>
+<li><p>You can determine your Spark Core's Core ID using the Spark-CLI if it is connected to your PC and &quot;breathing cyan&quot; by issuing the following commands: </p>
+
+<pre><code>spark cloud login
+spark cloud list
+</code></pre>
+
+<p><img src="images/06010-sparklist.png?raw=true" alt="06010-SparkList" title="Spark List">
+</p></li>
+<li><p>You can also determine your Spark Core's ID from the <a href="https://www.spark.io/login">Spark Build</a> web interface.  Login to <a href="https://www.spark.io/login">Spark Build</a>, and from the <strong>&quot;Cores&quot;</strong> page, click on the arrow next to your core to see it's Core ID:</p>
+
+<p><img src="images/06020-sparkcoreidinsparkbuild.png?raw=true" alt="06020-SparkCoreIDInSparkBuild" title="Spark Core Device ID in Spark Build">
+</p></li>
+<li><p>Your access token can also be retrieved from the Spark Build web interface.  Click on the <strong>&quot;Settings&quot;</strong> link, and copy your Access Token from there: </p>
+<blockquote>
+<p><strong>Note:</strong> Access Tokens expire every 90 days, so you will need to occasionally update the Access Token in your client.  You can learn more about access tokens here: <a href="http://docs.spark.io/api/#spark-cloud-api-authentication">http://docs.spark.io/api/#spark-cloud-api-authentication</a></p>
+</blockquote>
+<h2 id="img_srcimages06030-accesstokenpngrawtrue_alt06030-AccessToken_titleAccess_Token"><img src="images/06030-accesstoken.png?raw=true" alt="06030-AccessToken" title="Access Token">
+</h2></li>
+</ol>
+
+<p><a name="Task7"></a></p>
+
+<h2 id="Testing_the_Spark_Core">Testing the Spark Core</h2>
+
+<p>Ok, if you got this far it is assumed that you have a Spark Core connected to a Relay Sheild that is properly wired into the compressed air rocket launcher. You can now disconnect the Spark Core from your computer (disconnect the USB cable), and power it instead from a 9V battery connected to the Relay Shield.  </p>
+
+<p>We will be using the <a href="http://docs.spark.io/api">Spark REST api</a> to call the <strong>&quot;cycleRelay&quot;</strong> function published by the <strong>&quot;relayWidget&quot;</strong> app we flashed onto the Spark Core.  </p>
+
+<p>The REST API requires that all reqests include the <strong>&quot;Access Token&quot;</strong> for the account that the spark belongs to, as well as the Spark Core's device ID.  Use the instructions in the <a href="#Task6">Identifying your Spark Core</a> section to retrieve those values if needed. </p>
+
+<p>Cycle relay takes a single <strong>&quot;command&quot;</strong> string argument in the form of:</p>
+
+<p><code>r#,&lt;delay&gt;</code></p>
+
+<p>where <code>#</code> is the relay number (1-4) and <code>&lt;delay&gt;</code> is the number of milliseconds to pause between relay states.  </p>
+
+<p>For example, the following command string toggles relay 1 (<code>r1</code>) from off to on, pauses for five seconds (<code>5000</code> ms) then toggles the relay state from on back to off:</p>
+
+<p><code>r1,5000</code></p>
+
+<p>You can call the <strong>&quot;cycleRelay&quot;</strong> function on the spark a number of ways:</p>
+
+<ul>
+<li>Spark-CLI</li>
+<li>Curl</li>
+<li>A REST Client Tool</li>
+<li>A custom app</li>
+</ul>
+
+<p>We will cover the first three here, and leave the custom app implementation up to you.</p>
+
+<ol>
+<li><p>Connect the 9V battery to the snap connector in the Spark / Relay Shield Box, then turn on the power switch to power the Spark and the Relay Shield:</p>
+<blockquote>
+<p><strong>Note:</strong> This battery powers just the Spark Core and the Relays on the Relay Shield.  The 9V battery in the manual push-button tube is still needed to power the solenoid on the Sprinker Valve.  As before, if you keep this battery connected only when you are actually using the Rocket, the battery should last a long time.  However, be prepared to replace the battery if needed. </p>
+</blockquote>
+<p><img src="images/07010-connectbattery.png?raw=true" alt="07010-ConnectBattery" title="Connect Battery">
+</p></li>
+<li><p>When testing the <strong>&quot;cycleRelay&quot;</strong> function, there are two ways you can tell if it is working:</p>
+
+<ul>
+<li>If the little LED next to the USB port on the Spark Core turns blue.  This mimicks the relay state and allows you to test the app even if the Spark Core isn't connected to the Relay Shield</li>
+<li>The LED above the corresponding relay on the relay shield lights up when the relay is activated.<br></li>
+</ul>
+
+<p><img src="images/07015-visualindicators.png?raw=true" alt="07015-VisualIndicators" title="Visual Indicators">
+</p></li>
+<li><p>To use the Spark-CLI to call the cycleRelay function on your Spark Core first make sure you are logged in via the Spark CLI:</p>
+
+<p><code>spark cloud login</code></p>
+
+<p>Then run either:</p>
+
+<p><code>spark call &lt;deviceid&gt; cycleRelay r1,5000</code></p>
+
+<p>or </p>
+
+<p><code>spark call &lt;core name&gt; cycleRelay r1,5000</code></p>
+
+<p>for example:</p>
+
+<p><img src="images/07020-sparkclicall.png?raw=true" alt="07020-SparkCLICall" title="Spark-CLI Calls">
+</p>
+<blockquote>
+<p><strong>Note:</strong> you can change the <code>r1,5000</code> parameters to toggle a different relay for a different duration</p>
+</blockquote></li>
+<li><p>You can also use <a href="http://curl.haxx.se/download.html">curl</a> to test your spark using the following format:</p>
+
+<p><code>curl https://api.spark.io/v1/devices/&lt;core id&gt;/cycleRelay -k -d access_token=&lt;access token&gt; -d params=r1,5000</code></p>
+
+<p>For example:</p>
+
+<p><img src="images/07030-curlcal.png?raw=true" alt="07030-CurlCall" title="Curl Call">
+</p>
+<blockquote>
+<p><strong>Note:</strong> Again, you can modify the `r1,5000' value above to cycle a different relay for a different duration</p>
+</blockquote></li>
+<li><p>You can also use a REST test client like the <a href="http://chromerestclient.appspot.com/">&quot;Advanced Rest Client&quot; app for Chrome</a></p>
+
+<p><img src="images/07040-advancedrestclient.png?raw=true" alt="07040-AdvancedRestClient" title="Advanced REST Client">
+</p></li>
+</ol>
+
+<hr>
+
+<p><a name="summary"></a></p>
+
+<h2 id="Summary">Summary</h2>
+
+<p>The Compressed Air Rocket Launcher and Spark Core make is a great way to engage kids, friends, family, and even large audiences.  Everybody loves to see the rocket launch, and the construction, electronics and code are actually all pretty simple!  </p>
+
+<p>Have fun!  </p>
 
 </div>
 </body>
