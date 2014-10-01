@@ -21,7 +21,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <p>You can make your own rockets using a legal sheet of paper, some napkins (to add support to the nose cone), and copious amounts of tape.  Get the template here: <a href="Rocket_Template.pdf">Rocket_Template.pdf</a></p>
 
-<p>There is an alternate set of instructions with more complete instructions on creating the paper rockets here: <a href="http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf">http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf</a> .  A copy of the PDF is also included in this repository here: <a href="compressedairrocket.pdf">compressedairrocket.pdf</a></p>
+<p>There is an alternate set of instructions for the rocket launcher with more complete instructions on creating the paper rockets here: <a href="http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf">http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf</a> .  A copy of the PDF is also included in this repository here: <a href="compressedairrocket.pdf">compressedairrocket.pdf</a></p>
 
 <p><a name="inventory"></a></p>
 
@@ -48,7 +48,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <h2 id="Tasks">Tasks</h2>
 
 <ol>
-<li><a href="#Task1">Assembling the Rocket</a></li>
+<li><a href="#Task1">Assembling the Rocket Launcher</a></li>
 <li><a href="#Task2">Installing the Spark Core Windows USB Driver</a></li>
 <li><a href="#Task3">Installing the Spark-CLI</a></li>
 <li><a href="#Task4">Configuring WiFi for a Pre-Programmed Spark Core</a></li>
@@ -61,14 +61,17 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <p><a name="Task1"></a></p>
 
-<h2 id="Assembling_the_Rocket">Assembling the Rocket</h2>
+<h2 id="Assembling_the_Rocket_Launcher">Assembling the Rocket Launcher</h2>
 
 <ol>
 <li><p>Attach the <strong>Sprinkler Valve and Launch Tube</strong> (3) to the <strong>Compression Chamber</strong> (2) using the using the threaded PVC tubing extending from the compression chamber and threading it into the bottom of the sprinkler valve. </p>
 <blockquote>
 <p><strong>Note:</strong> Be sure that you have it threaded on tightly.  If need be use some plumbers tape to help ensure a good seal.  If the seal here is not good, air will lead out. </p>
 </blockquote></li>
-<li><p><strong>CAREFULLY</strong> remove the cap with the button on it from the <strong>&quot;Manual Firing Button and 9v Power Supply&quot;</strong> by twisting it back and forth while pulling it away from the tube.  </p></li>
+<li><p><strong>CAREFULLY</strong> remove the cap with the button on it from the <strong>&quot;Manual Firing Button and 9v Power Supply&quot;</strong> by twisting it back and forth while pulling it away from the tube. </p>
+<blockquote>
+<p><strong>Note:</strong> If you are using my rocket, I just improved the connections inside the tube so you don't have to be AS CAREFUL, but you don't want to the yank the cap off and break the connections.</p>
+</blockquote></li>
 <li><p>Inside the tube, you should find the 9V Battery and the 9V battery connector.  Connect the battery to the snap connector, the re-insert the battery in the tube and replace the cap. </p>
 <blockquote>
 <p><strong>Note:</strong> The 9V battery in the push button tube is what actually supplies the power for the sprinkler valve solenoid.  If you make sure to only have the battery connected when you are actively using the rocket, it should last for a very long time.  If you find that the Solenoid does not open when you push the button, you may try replacing the 9V battery in the tube. </p>
@@ -87,8 +90,10 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <li>Make sure to <strong>STAY CLEAR OF THE LAUNCH TUBE</strong></li>
 </ul></li>
 <li><p><strong>When you know it is safe to do so</strong>, push the manual push button, and verify that air is released from the launch tube.  <strong>Hold the push button down for five seconds to allow all of the air to escape.</strong> </p></li>
-<li><p>Assuming everything has worked so far, if you have a rocket handy, and you just can't wait, go ahead and <strong>SAFELY</strong> try firing a rocket.  Remember, this is supposed to be a fun thing, not a weapon.  Please <strong>DO NOT EVER AIM THE ROCKET AT SOMEBODY</strong>. I have had MULTIPLE accidental misfires during my use of the rocket, and have been very lucky to have never injured anybody, but this can be dangerous, so please take care. </p></li>
-<li><p>Here is the final assembled rocket:</p>
+<li><p>Assuming everything has worked so far, if you have a rocket handy, and you just can't wait, go ahead and <strong>SAFELY</strong> try firing a rocket.  Remember, this is supposed to be a fun thing, not a weapon.  Please <strong>DO NOT EVER AIM THE ROCKET AT SOMEBODY</strong>. I have had MULTIPLE accidental misfires during my use of the rocket, and have been very lucky to have never injured anybody, but this can be dangerous, so please take care. </p>
+
+<p>You can aim the rocket by rotating the compression chamber.  If the zip ties are too loose you can tighten them up to add enough friction to keep the compression chamber in place after &quot;aiming&quot;</p></li>
+<li><p>Here is the final assembled rocket launcher:</p>
 
 <p><img src="images/01020-assembledrocket.png?raw=true" alt="01020-AssembledRocket" title="Assembled Rocket">
 </p></li>
@@ -109,7 +114,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <blockquote>
 <p><strong>Note:</strong> You can also refer to the documentation for <a href="http://docs.spark.io/connect/#connecting-your-core-connect-over-usb">Connecting to the Spark Core via USB</a></p>
 </blockquote></li>
-<li><p>Connect the Spark Core to your computer via the USB, and ensure that the Spark Core is in **&quot;<a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">Listening Mode</a>&quot;** by confirming that the RGB LED on the board is flashing blue.  If it isn't, <a href="https://vine.co/v/hFHlpBDELeU">hold the <strong>&quot;MODE&quot;</strong> button on the Spark Core for about three seconds until it begins flashing</a>:</p>
+<li><p>Connect the Spark Core to your computer via the USB, and ensure that the Spark Core is in <strong><a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">&quot;Listening Mode&quot;</a></strong> by confirming that the RGB LED on the board is flashing blue.  If it isn't, <a href="https://vine.co/v/hFHlpBDELeU">hold the <strong>&quot;MODE&quot;</strong> button on the Spark Core for about three seconds until it begins flashing</a>:</p>
 
 <p><img src="images/02005-listeningmode.png?raw=true" alt="02005-ListeningMode" title="Listening Mode">
 </p></li>
@@ -117,7 +122,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <p><img src="images/02010-sparkinotherdevices.png?raw=true" alt="02010-SparkInOtherDevices" title="Spark in Other Devices">
 </p></li>
-<li><p>Select the &quot;Browse my computer for driver software option&quot;:</p>
+<li><p>Select the <strong>&quot;Browse my computer for driver software&quot;</strong> option:</p>
 
 <p><img src="images/02020-browse.png?raw=true" alt="02020-Browse" title="Browse">
 </p></li>
@@ -137,7 +142,7 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <p><img src="images/02060-sparkoncomport.png?raw=true" alt="02060-SparkOnComPort" title="Spark Core on COM Port">
 </p></li>
-<li><p>At this point, if you were to use a terminal program (Like <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a>) you could connect to the Spark Core via serial and issue <a href="http://docs.spark.io/connect/#connecting-your-core-connect-over-usb">some commands</a>.  However, the Spark Command Line Interfac e (Spark-CLI) offers significantly more functionality, so we'll use that.  </p></li>
+<li><p>At this point, if you were to use a terminal program (Like <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html">PuTTY</a>) you could connect serially to the Spark Core via the COM port listed (COM4 in this case) and issue <a href="http://docs.spark.io/connect/#connecting-your-core-connect-over-usb">some commands</a>.  However, the Spark Command Line Interface (Spark-CLI) offers significantly more functionality, so we'll use that.  </p></li>
 </ol>
 
 <hr>
@@ -146,7 +151,9 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <h2 id="Installing_the_Spark-CLI">Installing the Spark-CLI</h2>
 
-<p>The Spark Command Line Interface (Spark-CLI) is a Node.js application that allows you to manage your spark cores, and the code that runs on them.  The Spark-CLI source is available from GitHub at <a href="https://github.com/spark/spark-cli">https://github.com/spark/spark-cli</a> and you can read the docs here: <a href="http://docs.spark.io/cli/">http://docs.spark.io/cli/</a></p>
+<h3 id="span_stylecolor_090IF_YOU_ALREADY_HAVE_THE_LATEST_VERSION_OF_THE_SPARK-CLI_INSTALLED_YOU_CAN_SKIP_THIS_TASKspan"><span style="color: #090">IF YOU ALREADY HAVE THE LATEST VERSION OF THE SPARK-CLI INSTALLED YOU CAN SKIP THIS TASK</span></h3>
+
+<p>The S<strong>park Command Line Interface (Spark-CLI)</strong> is a <strong>Node.js</strong> application that allows you to manage your spark cores, and the code that runs on them.  The Spark-CLI source is available from GitHub at <a href="https://github.com/spark/spark-cli">https://github.com/spark/spark-cli</a> and you can read the docs here: <a href="http://docs.spark.io/cli/">http://docs.spark.io/cli/</a></p>
 
 <ol>
 <li><p>First, ensure that you have Node.js installed.  You can install it from here: <a href="http://nodejs.org/">http://nodejs.org/</a></p>
@@ -176,12 +183,12 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <h2 id="Configuring_WiFi_for_a_Pre-Programmed_Spark_Core">Configuring WiFi for a Pre-Programmed Spark Core</h2>
 
-<p><span style="color: #900; font-weight: bold">IF YOU ARE ADDING YOUR OWN SPARK CORE, OR NEED TO RE-PROGRAM AN EXISTING SPARK CORE, SKIP THIS STEP AND GO TO <a href="#Task5">Programming a new Spark Core</a></span></p>
+<h3 id="span_stylecolor_900_font-weight_boldIF_YOU_ARE_ADDING_YOUR_OWN_SPARK_CORE_OR_NEED_TO_RE-PROGRAM_AN_EXISTING_SPARK_CORE_SKIP_THIS_STEP_AND_GO_TO_a_hrefTask5Flashing_the_relayWidget_Sketchaspan"><span style="color: #900; font-weight: bold">IF YOU ARE ADDING YOUR OWN SPARK CORE, OR NEED TO RE-PROGRAM AN EXISTING SPARK CORE, SKIP THIS STEP AND GO TO <a href="#Task5">Flashing the relayWidget Sketch</a></span></h3>
 
-<p>If you received a rocket, with a Spark Core that has been pre-programmed, a Relay Board, and everything already connected, you only need to configure the Spark Core to connect to your local WiFi.</p>
+<p>If you received the rocket launcher, with a Spark Core that has been pre-programmed, a Relay Board, and everything already connected, you only need to configure the Spark Core to connect to your local WiFi.</p>
 
 <ol>
-<li><p>Connect the Spark Core to your PC via USB, and place the Spark Core into <strong>&quot;<a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">Listening Mode</a>&quot;</strong> by holding down the <strong>&quot;Mode&quot;</strong> button on the spark core until the RGB LED flashes blue. </p></li>
+<li><p>Connect the Spark Core to your PC via USB, and place the Spark Core into <strong>&quot;<a href="http://docs.spark.io/connect/#connecting-your-core-listening-mode">Listening Mode</a>&quot;</strong> by holding down the <strong>&quot;Mode&quot;</strong> button on the spark core until the RGB LED flashes blue repeatedly.</p></li>
 <li><p>Open a Node Command Prompt, and issue the following command </p>
 
 <p><code>spark setup wifi</code></p></li>
@@ -200,11 +207,11 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 
 <h2 id="Flashing_the_relayWidget_Sketch">Flashing the relayWidget Sketch</h2>
 
-<p><span style="color: #090; font-weight: bold">If your spark core is already programmed with the relayWidget Sketch, you can skip this step</span></p>
+<h3 id="span_stylecolor_090_font-weight_boldIf_your_spark_core_is_already_programmed_with_the_relayWidget_Sketch_you_can_skip_this_stepspan"><span style="color: #090; font-weight: bold">If your spark core is already programmed with the relayWidget Sketch, you can skip this step</span></h3>
 
 <p><span style="color: #900; font-weight: bold">If your Spark Core has not been &quot;claimed&quot;, you need to do that first.</span> </p>
 
-<p><span style="color: #900; font-weight: bold">If the Spark Core you want to program has already been claimed by another account, you will have to have that account owner remove the core before you can claim it:</span></p>
+<p><span style="color: #900; font-weight: bold">If the Spark Core you want to claim has already been claimed by another account, you will have to have that account owner remove the core before you can claim it:</span></p>
 
 <p><code>spark core remove &lt;core name / core id&gt;</code></p>
 
@@ -456,6 +463,10 @@ spark cloud list
 
 <p><img src="images/07040-advancedrestclient.png?raw=true" alt="07040-AdvancedRestClient" title="Advanced REST Client">
 </p></li>
+<li><p>To create a custom app (A Windows or Windows Phone App, Web App, iOS, Android, etc) you can read up on the <a href="http://docs.spark.io/api">Spark REST api</a> and implement your client code accordingly.</p></li>
+<li><p>Once you have a test working reliably, you can now SAFELY charge the compression chamber with the bike pump, place a rocket on the launcher and go for it! </p>
+
+<p><span style="color: #900; font-weight: bold">Be careful not to over pressurize the chamber.  For an &quot;indoor&quot; demo you want relatively low pressure.  Outdoors, you can increase it.  Start low, test, and increase as needed.</span></p></li>
 </ol>
 
 <hr>
