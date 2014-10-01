@@ -39,7 +39,7 @@ The following schematic gives you the basics of the eletronics although the sche
 1. [Configuring WiFi for a Pre-Programmed Spark Core](#Task4)
 1. [Flashing the relayWidget Sketch](#Task5)
 1. [Identifying your Spark Core](#Task6)
-1. [Testing the Spark Core](#Task6)
+1. [Testing the Spark Core](#Task7)
 
 ---
 
@@ -445,7 +445,7 @@ We will cover the first three here, and leave the custom app implementation up t
 <a name="summary" />
 ## Summary ##
 
-The Compressed Air Rocket Launcher and Spark Core make is a great way to engage kids, friends, family, and even large audiences.  Everybody loves to see the rocket launch, and the construction, electronics and code are actually all pretty simple!  
+The Compressed Air Rocket Launcher and Spark Core is a great way to engage kids, friends, family, and even large audiences.  Everybody loves to see the rocket launch, and the construction, electronics and code are actually all pretty simple!  
 
 Have fun!  
 
