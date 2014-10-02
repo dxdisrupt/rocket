@@ -10,6 +10,40 @@ You can make your own rockets using a legal sheet of paper, some napkins (to add
 
 There is an alternate set of instructions for the rocket launcher with more complete instructions on creating the paper rockets here: http://cdn.makezine.com/make/2010/04/compressedairrocket.pdf .  A copy of the PDF is also included in this repository here: [compressedairrocket.pdf](compressedairrocket.pdf?raw=true)
 
+---
+
+<a name="BuildInfo" />
+## Build Your Own ##
+
+These docs were originally written to help somebody configure the rocket launcher that was shipped to them.  However, there is only one in existence right now so if you wait to have it shipped to you, you may be waiting a while, and you can't keep it for long.  
+
+Building one is not hard, is great to do with kids or really any group.  
+
+1. Follow the instructions to create your own rocket launcher:
+	- [How-to: Building a compressed air rocket launcher] (http://makezine.com/2010/07/11/how-to-building-the-compressed-air/) 
+	- Alternate instructions: [compressedairrocket.pdf](compressedairrocket.pdf?raw=true)
+	- PDF Template for Paper Rockets: [Rocket_Template.pdf](Rocket_Template.pdf?raw=true)
+
+1. Get a [Spark Core](https://www.spark.io/store) (The one with the chip attenna is fine for most use cases.  If you will be using this outside far away from your WiFi hotspot, you may prefer the one with the ufl connector so you can attach an external antenna for extended range. 
+
+1. Get a Spark Core [Relay Shield](https://www.spark.io/store) 
+
+1. Additional misc parts:
+
+	- Project enclosure for the Spark Relay Sheild, Spark Core, and 9V Battery (I used a sandwich container from the dollar store! High class huh!)
+
+	- Optional On/Off switch for the Spark Core (to help save the battery when you aren't using it)
+
+	- Wire to connect the Spark Core
+
+- An Adventerous attitude is required.  You will likely need to "invent" a few things as you build your own system.  If I get to where I can spec out exact parts and process I will, but then that would take some of the fun out of building your own version. 
+
+	
+
+
+
+---
+
 <a name="inventory" />
 ## Inventory ##
 
