@@ -92,6 +92,8 @@ body{font-family:helvetica, arial, freesans, clean, sans-serif;color:#333;line-h
 <li><a href="#Task5">Flashing the relayWidget Sketch</a></li>
 <li><a href="#Task6">Identifying your Spark Core</a></li>
 <li><a href="#Task7">Testing the Spark Core</a></li>
+<li><a href="#Task8">Using Visual Studio to Create a Launcher Web Site</a></li>
+<li><a href="#Task9">Publishing your Web Site to Azure</a></li>
 </ol>
 
 <hr>
@@ -504,6 +506,308 @@ spark cloud list
 <li><p>Once you have a test working reliably, you can now SAFELY charge the compression chamber with the bike pump, place a rocket on the launcher and go for it! </p>
 
 <p><span style="color: #900; font-weight: bold">Be careful not to over pressurize the chamber.  For an &quot;indoor&quot; demo you want relatively low pressure.  Outdoors, you can increase it.  Start low, test, and increase as needed.</span></p></li>
+</ol>
+
+<hr>
+
+<p><a name="Task8"></a></p>
+
+<h1 id="Using_Visual_Studio_to_Create_a_Launcher_Web_Site">Using Visual Studio to Create a Launcher Web Site</h1>
+
+<p>Now that you know that you can launch the rocket using the REST API, you can really write any kind of app you want to launch the rocket.  It could be a phone app, a desktop app, a web site, whatever. In this step, we'll create a simple web site (really, just a web page) using <strong>Visual Studio Community Edition</strong>.  </p>
+
+<ol>
+<li><p>If you don't have Visual Studio Community Edition, you can get a copy from <a href="http://visualstudio.com">visualstudio.com</a>.  You can also use Visual Studio Express for Web 2013, or another full version of Visual Studio 2013 if you already have them.  Make sure to also install the latest Azure SDK from <a href="http://azure.microsoft.com/en-us/downloads/">http://azure.microsoft.com/en-us/downloads/</a> . We'll assume you are using Visual Studio 2013 Community Edition. </p></li>
+<li><p>In the Visual Studio window, from the menu bar, select <strong>&quot;File&quot;</strong> | <strong>&quot;New&quot;</strong> | <strong>&quot;Web Site...&quot;</strong> :</p>
+
+<p><img src="images/08010-filenewwebsite.png?raw=true" alt="08010-FileNewWebSite" title="File New Web Site">
+</p></li>
+<li><p>Then, in the <strong>&quot;New Web Site&quot;</strong> window, select <strong>&quot;Visual C#&quot;</strong>, <strong>&quot;ASP.NET Empty Web Site&quot;</strong>, and then specify the file system path to the folder where you want to create the web site:</p>
+
+<p><img src="images/08020-newwebsitewindow.png?raw=true" alt="08020-NewWebSiteWindow" title="New Web Site Window">
+</p></li>
+<li><p>In the Visual Studio <strong>&quot;Solution Explorer&quot;</strong> window, right click on the name of your web site, and select <strong>&quot;Add&quot;</strong> | <strong>&quot;Add New Item...&quot;</strong> from the pop-up menu:</p>
+
+<p><img src="images/08030-addnewitemmenu.png?raw=true" alt="08030-AddNewItemMenu" title="Add New Item Menu">
+</p></li>
+<li><p>In the <strong>&quot;Add New Item&quot;</strong> window, select <strong>&quot;HTML Page&quot;</strong>, then give the file the name <strong>&quot;index.html&quot;</strong> and click <strong>&quot;Add&quot;</strong>:</p>
+
+<p><img src="images/08040-addindexhtml.png?raw=true" alt="08040-AddIndexHtml" title="Add index.html">
+</p></li>
+<li><p>Replace the entire contents of the new index.html file with the following code:</p>
+<blockquote>
+<p><strong>Note:</strong> You can also copy the contents from the <a href="./RocketWeb/index.html">RocketWeb/index.html</a> file</p>
+</blockquote>
+<span class="codelanguage">HTML</span><pre><code class="HTML"><span style="color:#0000FF">&lt;</span>!DOCTYPE html<span style="color:#0000FF">&gt;</span>
+<span style="color:#0000FF">&lt;</span><span style="color:#800000">html</span> <span style="color:#FF0000">lang</span>=<span style="color:#0000FF">&quot;en&quot;</span><span style="color:#0000FF">&gt;</span>
+<span style="color:#0000FF">&lt;</span><span style="color:#800000">head</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">meta</span> <span style="color:#FF0000">charset</span>=<span style="color:#0000FF">&quot;utf-8&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">meta</span> <span style="color:#FF0000">http</span>-<span style="color:#FF0000">equiv</span>=<span style="color:#0000FF">&quot;X-UA-Compatible&quot;</span> <span style="color:#FF0000">content</span>=<span style="color:#0000FF">&quot;IE=edge&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">meta</span> <span style="color:#FF0000">name</span>=<span style="color:#0000FF">&quot;viewport&quot;</span> <span style="color:#FF0000">content</span>=<span style="color:#0000FF">&quot;width=device-width, initial-scale=1&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">meta</span> <span style="color:#FF0000">name</span>=<span style="color:#0000FF">&quot;description&quot;</span> <span style="color:#FF0000">content</span>=<span style="color:#0000FF">&quot;&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">meta</span> <span style="color:#FF0000">name</span>=<span style="color:#0000FF">&quot;author&quot;</span> <span style="color:#FF0000">content</span>=<span style="color:#0000FF">&quot;&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">link</span> <span style="color:#FF0000">rel</span>=<span style="color:#0000FF">&quot;icon&quot;</span> <span style="color:#FF0000">href</span>=<span style="color:#0000FF">&quot;../../favicon.ico&quot;</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">title</span><span style="color:#0000FF">&gt;</span>Rocket Launcher<span style="color:#0000FF">&lt;/</span><span style="color:#800000">title</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#008000">&lt;!-- Bootstrap core CSS --&gt;</span><span style="color:#008000">&lt;!-- Latest compiled and minified CSS --&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">link</span> <span style="color:#FF0000">rel</span>=<span style="color:#0000FF">&quot;stylesheet&quot;</span> <span style="color:#FF0000">href</span>=<span style="color:#0000FF">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css&quot;</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#008000">&lt;!-- Bootstrap theme --&gt;</span><span style="color:#008000">&lt;!-- Optional theme --&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">link</span> <span style="color:#FF0000">rel</span>=<span style="color:#0000FF">&quot;stylesheet&quot;</span> <span style="color:#FF0000">href</span>=<span style="color:#0000FF">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css&quot;</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#008000">&lt;!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries --&gt;</span>
+  <span style="color:#008000">&lt;!--[if lt IE 9]&gt;
+     &lt;script src=&quot;https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js&quot;&gt;&lt;/script&gt;
+     &lt;script src=&quot;https://oss.maxcdn.com/respond/1.4.2/respond.min.js&quot;&gt;&lt;/script&gt;
+  &lt;![endif]--&gt;</span>
+
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">style</span> <span style="color:#FF0000">type</span>=<span style="color:#0000FF">&quot;text/css&quot;</span><span style="color:#0000FF">&gt;</span>
+     /* start the alerts out as hidden */
+     .alert {
+        display: none;
+     }
+  <span style="color:#0000FF">&lt;/</span><span style="color:#800000">style</span><span style="color:#0000FF">&gt;</span>
+<span style="color:#0000FF">&lt;/</span><span style="color:#800000">head</span><span style="color:#0000FF">&gt;</span>
+
+<span style="color:#0000FF">&lt;</span><span style="color:#800000">body</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;document&quot;</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">div</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;container theme-showcase&quot;</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;main&quot;</span><span style="color:#0000FF">&gt;</span>
+
+     <span style="color:#008000">&lt;!-- Main jumbotron for a primary marketing message or call to action --&gt;</span>
+     <span style="color:#0000FF">&lt;</span><span style="color:#800000">div</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;jumbotron&quot;</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">h1</span><span style="color:#0000FF">&gt;</span>Rocket Launcher<span style="color:#0000FF">&lt;/</span><span style="color:#800000">h1</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+          Use this page to launch your rocket!  Refer to the documentation at <span style="color:#0000FF">&lt;</span><span style="color:#800000">a</span> <span style="color:#FF0000">href</span>=<span style="color:#0000FF">&quot;http://github.com/dxdisrupt/rocket&quot;</span> <span style="color:#FF0000">target</span>=<span style="color:#0000FF">&quot;_blank&quot;</span><span style="color:#0000FF">&gt;</span>http://github.com/dxdisrupt/rocket<span style="color:#0000FF">&lt;/</span><span style="color:#800000">a</span><span style="color:#0000FF">&gt;</span> for more information!
+        <span style="color:#0000FF">&lt;/</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+          <span style="color:#0000FF">&lt;</span><span style="color:#800000">a</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;btn btn-primary btn-lg&quot;</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;button&quot;</span> <span style="color:#FF0000">href</span>=<span style="color:#0000FF">&quot;http://github.com/dxdisrupt/rocket&quot;</span> <span style="color:#FF0000">target</span>=<span style="color:#0000FF">&quot;_blank&quot;</span><span style="color:#0000FF">&gt;</span>Learn more &amp;raquo;<span style="color:#0000FF">&lt;/</span><span style="color:#800000">a</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;/</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+     <span style="color:#0000FF">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000FF">&gt;</span>
+
+     <span style="color:#008000">&lt;!-- This is the Launch button.  We&#39;ll click this to launch the rocket.
+            It&#39;s click event handler get&#39;s wired up in the document.onready
+            function below --&gt;</span>
+     <span style="color:#0000FF">&lt;</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">button</span> <span style="color:#FF0000">id</span>=<span style="color:#0000FF">&quot;buttonLaunch&quot;</span> <span style="color:#FF0000">type</span>=<span style="color:#0000FF">&quot;button&quot;</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;btn btn-block btn-lg btn-danger&quot;</span><span style="color:#0000FF">&gt;</span>LAUNCH<span style="color:#0000FF">&lt;/</span><span style="color:#800000">button</span><span style="color:#0000FF">&gt;</span>
+     <span style="color:#0000FF">&lt;/</span><span style="color:#800000">p</span><span style="color:#0000FF">&gt;</span>
+
+     <span style="color:#008000">&lt;!-- These divs are used to give feed back to the user while the rocket is launching or 
+            based on the success or failure of the launch  --&gt;</span>
+     <span style="color:#0000FF">&lt;</span><span style="color:#800000">div</span> <span style="color:#FF0000">id</span>=<span style="color:#0000FF">&quot;alertInfo&quot;</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;alert alert-info&quot;</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;alert&quot;</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span>LAUNCHING ROCKET!<span style="color:#0000FF">&lt;/</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span> This will take about five seconds if everything works right, or up to thirty seconds if there is a problem. Please wait....
+     <span style="color:#0000FF">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000FF">&gt;</span>
+
+     <span style="color:#0000FF">&lt;</span><span style="color:#800000">div</span> <span style="color:#FF0000">id</span>=<span style="color:#0000FF">&quot;alertSuccess&quot;</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;alert alert-success&quot;</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;alert&quot;</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span>CONGRATULATIONS!<span style="color:#0000FF">&lt;/</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span>: Your rocket should be flying high!
+     <span style="color:#0000FF">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000FF">&gt;</span>
+
+     <span style="color:#0000FF">&lt;</span><span style="color:#800000">div</span> <span style="color:#FF0000">id</span>=<span style="color:#0000FF">&quot;alertFailure&quot;</span> <span style="color:#FF0000">class</span>=<span style="color:#0000FF">&quot;alert alert-danger&quot;</span> <span style="color:#FF0000">role</span>=<span style="color:#0000FF">&quot;alert&quot;</span><span style="color:#0000FF">&gt;</span>
+        <span style="color:#0000FF">&lt;</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span>EPIC FAIL!<span style="color:#0000FF">&lt;/</span><span style="color:#800000">strong</span><span style="color:#0000FF">&gt;</span>: Something went wrong.  Make sure that you updated the Spark Core ID and Access Token in the source code, and that the Spark Core is on and breathing cyan.
+     <span style="color:#0000FF">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#0000FF">&lt;/</span><span style="color:#800000">div</span><span style="color:#0000FF">&gt;</span> <span style="color:#008000">&lt;!-- /container --&gt;</span>
+  <span style="color:#008000">&lt;!-- Bootstrap core JavaScript
+  ================================================== --&gt;</span>
+  <span style="color:#008000">&lt;!-- Placed at the end of the document so the pages load faster --&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">script</span> <span style="color:#FF0000">src</span>=<span style="color:#0000FF">&quot;https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js&quot;</span><span style="color:#0000FF">&gt;</span><span style="color:#0000FF">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#008000">&lt;!-- Latest compiled and minified JavaScript --&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">script</span> <span style="color:#FF0000">src</span>=<span style="color:#0000FF">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js&quot;</span><span style="color:#0000FF">&gt;</span><span style="color:#0000FF">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">script</span> <span style="color:#FF0000">src</span>=<span style="color:#0000FF">&quot;../../assets/js/docs.min.js&quot;</span><span style="color:#0000FF">&gt;</span><span style="color:#0000FF">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+  <span style="color:#008000">&lt;!-- IE10 viewport hack for Surface/desktop Windows 8 bug --&gt;</span>
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">script</span> <span style="color:#FF0000">src</span>=<span style="color:#0000FF">&quot;https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/ie10-viewport-bug-workaround.min.js&quot;</span><span style="color:#0000FF">&gt;</span><span style="color:#0000FF">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+
+  <span style="color:#0000FF">&lt;</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+
+     $(document).ready(function () {
+        //wire up the button click event handler
+        $(&#39;#buttonLaunch&#39;).click(function () {
+          //When the user clicks the button, call the launch method (defined below)
+          launch();
+        });
+     });
+
+     //This function uses jQuery&#39;s ajax functionality to call the Spark Core REST API
+     //and launch the rocket. Make sure to update the coreId and accessToken variables
+     //with your values...
+     launch = function () {
+
+        /*
+        !!!!!!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!!!!
+
+        You need to update the coreId and accessToken variables with your Spark Core&#39;s 
+        Core ID and your account&#39;s Access Token. Refer to the following link if you 
+        need help finding those values: 
+        https://github.com/dxdisrupt/rocket#Task6
+        */
+        var coreId = &quot;PUT YOUR CORE ID HERE&quot;;
+        var accessToken = &quot;PUT YOUR ACCESS TOKEN HERE&quot;;
+
+        //This builds the URL to the REST API endpoint for the cycleRelay function 
+        //with your given coreId
+        var url = &quot;https://api.spark.io/v1/devices/&quot; + coreId + &quot;/cycleRelay&quot;;
+
+        //Turn on the alertInfo div to show the user that the rocket launch is being attempted
+        showAlerts(&quot;info&quot;);
+
+        //Make the Ajax Call
+        $.ajax({
+          type: &quot;POST&quot;,
+          url: url,
+          data: {
+             access_token: accessToken,
+             args: &quot;r1,5000&quot; //Fires relay 1 for 5 seconds to make sure all the air exits the launcher
+          },
+          complete: function (jqxhr, status) {
+             //Figure out if the call was successful or not
+             //The cycleRelay function should return a value of 1 if all was well
+             //If we got anything else back, it failed. Use that knowledge to show
+             //the appropriate alert div.
+             var success = false;
+             if (jqxhr.responseJSON.return_value === 1) {
+                showAlerts(&quot;success&quot;);
+             } else {
+                showAlerts(&quot;failure&quot;);
+             }
+          }
+        });
+     };
+
+     //This uses the state argument values &quot;info&quot;,&quot;success&quot;,&quot;failure&quot; or &quot;none&quot;
+     //to determine which of the alert divs (if any) to hide or show.
+     showAlerts = function (state) {
+        switch (state) {
+          case &quot;info&quot;:
+             $(&#39;#alertInfo&#39;).show();
+             $(&#39;#alertSuccess&#39;).hide();
+             $(&#39;#alertFailure&#39;).hide();
+             break;
+          case &quot;success&quot;:
+             $(&#39;#alertInfo&#39;).hide();
+             $(&#39;#alertSuccess&#39;).show();
+             $(&#39;#alertFailure&#39;).hide();
+             break;
+          case &quot;failure&quot;:
+             $(&#39;#alertInfo&#39;).hide();
+             $(&#39;#alertSuccess&#39;).hide();
+             $(&#39;#alertFailure&#39;).show();
+             break;
+          case &quot;none&quot;:
+          default:
+             $(&#39;#alertInfo&#39;).hide();
+             $(&#39;#alertSuccess&#39;).hide();
+             $(&#39;#alertFailure&#39;).hide();
+             break;
+        }
+     };
+
+  <span style="color:#0000FF">&lt;/</span><span style="color:#800000">script</span><span style="color:#0000FF">&gt;</span>
+<span style="color:#0000FF">&lt;/</span><span style="color:#800000">body</span><span style="color:#0000FF">&gt;</span>
+<span style="color:#0000FF">&lt;/</span><span style="color:#800000">html</span><span style="color:#0000FF">&gt;</span>
+</code></pre></li>
+<li><p>Next, you need to replace some code in the file. On lines 102 and 103 (or thereabouts), you need to update the <code>coreId</code> and <code>accessToken</code> variables with the appropriate values for your Spark Core. For example, the Core ID and Access token used above would change: </p>
+
+<p><img src="images/08050-placeholders.png?raw=true" alt="08050-PlaceHolders" title="Place Holders">
+</p>
+
+<p>with</p>
+
+<p><img src="images/08060-replacedvalues.png?raw=true" alt="08060-ReplacedValues" title="Replaced Values">
+</p></li>
+<li><p>Now, from the Visual Studio toolbar clic the <strong>&quot;Save All&quot;</strong> button (if you are prompted for a location to save your .sln file, accept the default, or choose a path you prefer), then click the <strong>&quot;Debug&quot;</strong> button to debug the site in the browser:</p>
+
+<p><img src="images/08070-debuginbrowser.png?raw=true" alt="08070-DebugInBrowser" title="Debug In Browser">
+</p></li>
+<li><p>The page should open in the browser:</p>
+
+<p><img src="images/08080-pageinbrowser.png?raw=true" alt="08080-PageInBrowser" title="Page in Browser">
+</p></li>
+<li><p>Before launching, make sure that:</p>
+
+<ul>
+<li>you properly updated the <code>coreId</code> and <code>accessToken</code> variables as just described</li>
+<li>your spark core is powered on and breathing cyan</li>
+<li>you may NOT want the rocket actually on the launcher, you can verify that the site is working just by viewing the LEDs on the relay board.  It is up to you.</li>
+</ul></li>
+<li><p>When you are ready, click the <strong>&quot;LAUNCH&quot;</strong> button, and verify that the info message is displayed:</p>
+<blockquote>
+<p><strong>Note:</strong> Watch the LED above your relay on the relay board to verify that it is activating.  Of course, if you had the launcher charged, and a rocket ready to launch, it should have launched now.  </p>
+</blockquote>
+<p><img src="images/08090-infoalert.png?raw=true" alt="08090-InfoAlert" title="Info Alert">
+</p></li>
+<li><p>Assuming everything worked, the success alert message should be shown:</p>
+
+<p><img src="images/08100-successalert.png?raw=true" alt="08100-SuccessAlert" title="Success Alert">
+</p></li>
+<li><p>Or if there were any problems, the failure alert will display:</p>
+
+<ul>
+<li>Verify the <code>coreId</code> and <code>accessToken</code> variable values</li>
+<li>Ensure that the Spark Core is powered on and breathing cyan</li>
+<li>Ensure that you properly flashed the relayWidget app to the Spark Core</li>
+</ul>
+
+<p><img src="images/08110-failurealert.png?raw=true" alt="08110-FailureAlert" title="Failure Alert">
+</p></li>
+</ol>
+
+<hr>
+
+<p><a name="Task9"></a></p>
+
+<h2 id="Publishing_your_Web_Site_to_Azure">Publishing your Web Site to Azure</h2>
+
+<p>Cool, we are now launching the rocket from a web page, but it the page is running on our local development workstation.  If we'd like to be able to use that web page to fire the rocket from mobile device, or from anywhere else in the world, we need to get the web site up where people can access it from the Internet.  One of the easiest ways to do that is with an Azure Web Site.  </p>
+<blockquote>
+<p><strong>Note:</strong> In order to do this task, you will need a current, valid Azure subscription.  If you don't have one, you can create a free trial account at <a href="http://azure.microsoft.com">http://azure.microsoft.com</a> </p>
+</blockquote>
+<ol>
+<li><p>Ensure that the web site is open in Visual Studio</p></li>
+<li><p>In the <strong>&quot;Solution Explorer&quot;</strong> window, right click on the name of your web site, and select <strong>&quot;Publis Web Site&quot;</strong> from the pop-up menu:</p>
+
+<p><img src="images/09010-publishwebsitemenu.png?raw=true" alt="09010-PublishWebSiteMenu" title="Publish Web Site Menu Item">
+</p></li>
+<li><p>In the <strong>&quot;Publish Web&quot;</strong> window, select <strong>&quot;Microsoft Azure Web Sites&quot;</strong>:</p>
+
+<p><img src="images/09020-selectazurewebsites.png?raw=true" alt="09020-SelectAzureWebSites" title="Select Azure Web Sites">
+</p></li>
+<li><p>If you aren't already signed into your Azure account, click the <strong>&quot;Sign In...&quot;</strong> button, and when prompted, enter the credentials associated with the Azure subscription you want to use:</p>
+
+<p><img src="images/09030-signinifneeded.png?raw=true" alt="09030-SignInIfNeeded" title="Sign In if Needed">
+</p></li>
+<li><p>Once you are signed in, click the <strong>&quot;New...&quot;</strong> button to create a new Azure Web Site (or if you have already created the site you want to deploy to, you can select it from the drop-down list):</p>
+
+<p><img src="images/09040-newbutton.png?raw=true" alt="09040-NewButton" title="New Button">
+</p></li>
+<li><p>In the <strong>&quot;Create site on Microsoft Azure&quot;</strong> window, complete the fields, and click <strong>&quot;Create&quot;</strong></p>
+
+<ul>
+<li><strong>Site name</strong> must be a unique host name.</li>
+<li><strong>Subscription</strong> should be the subscription you want to use</li>
+<li><strong>Region</strong> should be a region near you</li>
+<li><strong>Database server</strong> should be <strong>No database</strong> (this site doesn't use one)</li>
+</ul>
+
+<p><img src="images/09050-createnewwebsite.png?raw=true" alt="09050-CreateNewWebSite" title="Create New Web Site">
+</p></li>
+<li><p>On the <strong>Publish Web&quot;</strong> page, accept the defaults (Visual Studio got these straight from Azure, so they should be correct), and click the <strong>&quot;Publish&quot;</strong> button:</p>
+
+<p><img src="images/09060-publish.png?raw=true" alt="09060-Publish" title="Publish">
+</p></li>
+<li><p>Back in Visual Studio, you can monitor your publish progress in the <strong>&quot;Output&quot;</strong> and <strong>&quot;Web Publish Activity&quot;</strong> windows:</p>
+
+<p><img src="images/09070-outputwindow.png?raw=true" alt="09070-OutputWindow" title="Output Window">
+</p>
+
+<p><img src="images/09080-webpublishactivity.png?raw=true" alt="09080-WebPublishActivity" title="Web Publish Activity Window">
+</p></li>
+<li><p>As long as the publish process completes successfully though, your new Azure Web Site should open in the browser:</p>
+
+<p><img src="images/09090-siteinazure.png?raw=true" alt="09090-SiteInAzure" title="Site in Azure">
+</p></li>
+<li><p>You should now be able to open that site from anywhere, and use it to launch your rocket! So cool! For example, here it is running on a Windows Phone:</p>
+
+<p><img src="images/09100-onwindowsphone.png?raw=true" alt="09100-OnWindowsPhone" title="On Windows Phone!">
+</p></li>
 </ol>
 
 <hr>

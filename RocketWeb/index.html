@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>Rocket Launcher</title>
+
+  <!-- Bootstrap core CSS --><!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+  <!-- Bootstrap theme --><!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <![endif]-->
+
+  <style type="text/css">
+    /* start the alerts out as hidden */
+    .alert {
+      display: none;
+    }
+  </style>
+</head>
+
+<body role="document">
+
+  <div class="container theme-showcase" role="main">
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <h1>Rocket Launcher</h1>
+      <p>
+        Use this page to launch your rocket!  Refer to the documentation at <a href="http://github.com/dxdisrupt/rocket" target="_blank">http://github.com/dxdisrupt/rocket</a> for more information!
+      </p>
+      <p>
+        <a class="btn btn-primary btn-lg" role="button" href="http://github.com/dxdisrupt/rocket" target="_blank">Learn more &raquo;</a>
+      </p>
+    </div>
+
+    <!-- This is the Launch button.  We'll click this to launch the rocket.
+           It's click event handler get's wired up in the document.onready
+           function below -->
+    <p>
+      <button id="buttonLaunch" type="button" class="btn btn-block btn-lg btn-danger">LAUNCH</button>
+    </p>
+
+    <!-- These divs are used to give feed back to the user while the rocket is launching or
+           based on the success or failure of the launch  -->
+    <div id="alertInfo" class="alert alert-info" role="alert">
+      <strong>LAUNCHING ROCKET!</strong> This will take about five seconds if everything works right, or up to thirty seconds if there is a problem. Please wait....
+    </div>
+
+    <div id="alertSuccess" class="alert alert-success" role="alert">
+      <strong>CONGRATULATIONS!</strong>: Your rocket should be flying high!
+    </div>
+
+    <div id="alertFailure" class="alert alert-danger" role="alert">
+      <strong>EPIC FAIL!</strong>: Something went wrong.  Make sure that you updated the Spark Core ID and Access Token in the source code, and that the Spark Core is on and breathing cyan.
+    </div>
+
+  </div> <!-- /container -->
+  <!-- Bootstrap core JavaScript
+  ================================================== -->
+  <!-- Placed at the end of the document so the pages load faster -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <script src="../../assets/js/docs.min.js"></script>
+  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/ie10-viewport-bug-workaround.min.js"></script>
+
+  <script>
+
+     $(document).ready(function () {
+        //wire up the button click event handler
+        $('#buttonLaunch').click(function () {
+          //When the user clicks the button, call the launch method (defined below)
+          launch();
+        });
+     });
+
+     //This function uses jQuery's ajax functionality to call the Spark Core REST API
+     //and launch the rocket. Make sure to update the coreId and accessToken variables
+     //with your values...
+     launch = function () {
+
+        /*
+        !!!!!!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!!!!
+
+        You need to update the coreId and accessToken variables with your Spark Core's
+        Core ID and your account's Access Token. Refer to the following link if you
+        need help finding those values:
+        https://github.com/dxdisrupt/rocket#Task6
+        */
+        var coreId = "PUT YOUR CORE ID HERE";
+        var accessToken = "PUT YOUR ACCESS TOKEN HERE";
+
+        //This builds the URL to the REST API endpoint for the cycleRelay function
+        //with your given coreId
+        var url = "https://api.spark.io/v1/devices/" + coreId + "/cycleRelay";
+
+        //Turn on the alertInfo div to show the user that the rocket launch is being attempted
+        showAlerts("info");
+
+        //Make the Ajax Call
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: {
+             access_token: accessToken,
+             args: "r1,5000" //Fires relay 1 for 5 seconds to make sure all the air exits the launcher
+          },
+          complete: function (jqxhr, status) {
+             //Figure out if the call was successful or not
+             //The cycleRelay function should return a value of 1 if all was well
+             //If we got anything else back, it failed. Use that knowledge to show
+             //the appropriate alert div.
+             var success = false;
+             if (jqxhr.responseJSON.return_value === 1) {
+                showAlerts("success");
+             } else {
+                showAlerts("failure");
+             }
+          }
+        });
+     };
+
+     //This uses the state argument values "info","success","failure" or "none"
+     //to determine which of the alert divs (if any) to hide or show.
+     showAlerts = function (state) {
+        switch (state) {
+          case "info":
+             $('#alertInfo').show();
+             $('#alertSuccess').hide();
+             $('#alertFailure').hide();
+             break;
+          case "success":
+             $('#alertInfo').hide();
+             $('#alertSuccess').show();
+             $('#alertFailure').hide();
+             break;
+          case "failure":
+             $('#alertInfo').hide();
+             $('#alertSuccess').hide();
+             $('#alertFailure').show();
+             break;
+          case "none":
+          default:
+             $('#alertInfo').hide();
+             $('#alertSuccess').hide();
+             $('#alertFailure').hide();
+             break;
+        }
+     };
+
+  </script>
+</body>
+</html>

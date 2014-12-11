@@ -1,0 +1,14 @@
+Correct: 
+      var coreId = "PUT YOUR CORE ID HERE";
+      
+      var accessToken = "PUT YOUR ACCESS TOKEN HERE";
+
+
+Old:
+      var coreId = "53ff6e066667574833512467";
+      var accessToken = "1c0ff2acbdcda4aa1d90d4cbe36a2514dea5da18";
+
+Mine:
+      var coreId = "53ff6e066667574833512467";
+      var accessToken = "c512e023e506e5f7872ec3036a40bb02f9e1eb0b";
+

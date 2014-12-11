@@ -74,6 +74,8 @@ The following schematic gives you the basics of the eletronics although the sche
 1. [Flashing the relayWidget Sketch](#Task5)
 1. [Identifying your Spark Core](#Task6)
 1. [Testing the Spark Core](#Task7)
+1. [Using Visual Studio to Create a Launcher Web Site](#Task8)
+1. [Publishing your Web Site to Azure](#Task9)
 
 ---
 
@@ -473,7 +475,301 @@ We will cover the first three here, and leave the custom app implementation up t
 1. Once you have a test working reliably, you can now SAFELY charge the compression chamber with the bike pump, place a rocket on the launcher and go for it! 
 	
 	<span style="color: #900; font-weight: bold">Be careful not to over pressurize the chamber.  For an "indoor" demo you want relatively low pressure.  Outdoors, you can increase it.  Start low, test, and increase as needed.</span>
- 
+
+---
+
+<a name="Task8" />
+# Using Visual Studio to Create a Launcher Web Site #
+
+Now that you know that you can launch the rocket using the REST API, you can really write any kind of app you want to launch the rocket.  It could be a phone app, a desktop app, a web site, whatever. In this step, we'll create a simple web site (really, just a web page) using **Visual Studio Community Edition**.  
+
+1. If you don't have Visual Studio Community Edition, you can get a copy from [visualstudio.com](http://visualstudio.com).  You can also use Visual Studio Express for Web 2013, or another full version of Visual Studio 2013 if you already have them.  Make sure to also install the latest Azure SDK from http://azure.microsoft.com/en-us/downloads/ . We'll assume you are using Visual Studio 2013 Community Edition. 
+
+1. In the Visual Studio window, from the menu bar, select **"File"** | **"New"** | **"Web Site..."** :
+
+	![08010-FileNewWebSite](images/08010-filenewwebsite.png?raw=true "File New Web Site")
+
+1. Then, in the **"New Web Site"** window, select **"Visual C#"**, **"ASP.NET Empty Web Site"**, and then specify the file system path to the folder where you want to create the web site:
+
+	![08020-NewWebSiteWindow](images/08020-newwebsitewindow.png?raw=true "New Web Site Window")
+
+1. In the Visual Studio **"Solution Explorer"** window, right click on the name of your web site, and select **"Add"** | **"Add New Item..."** from the pop-up menu:
+
+	![08030-AddNewItemMenu](images/08030-addnewitemmenu.png?raw=true "Add New Item Menu")
+
+1. In the **"Add New Item"** window, select **"HTML Page"**, then give the file the name **"index.html"** and click **"Add"**:
+
+	![08040-AddIndexHtml](images/08040-addindexhtml.png?raw=true "Add index.html")
+
+1. Replace the entire contents of the new index.html file with the following code:
+
+	> **Note:** You can also copy the contents from the [RocketWeb/index.html](./RocketWeb/index.html) file
+
+	````HTML
+	<!DOCTYPE html>
+	<html lang="en">
+	<head>
+	  <meta charset="utf-8">
+	  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	  <meta name="viewport" content="width=device-width, initial-scale=1">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
+	  <link rel="icon" href="../../favicon.ico">
+
+	  <title>Rocket Launcher</title>
+
+	  <!-- Bootstrap core CSS --><!-- Latest compiled and minified CSS -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	  <!-- Bootstrap theme --><!-- Optional theme -->
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+
+	  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	  <!--[if lt IE 9]>
+		 <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+		 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	  <![endif]-->
+
+	  <style type="text/css">
+		 /* start the alerts out as hidden */
+		 .alert {
+			display: none;
+		 }
+	  </style>
+	</head>
+
+	<body role="document">
+
+	  <div class="container theme-showcase" role="main">
+
+		 <!-- Main jumbotron for a primary marketing message or call to action -->
+		 <div class="jumbotron">
+			<h1>Rocket Launcher</h1>
+			<p>
+			  Use this page to launch your rocket!  Refer to the documentation at <a href="http://github.com/dxdisrupt/rocket" target="_blank">http://github.com/dxdisrupt/rocket</a> for more information!
+			</p>
+			<p>
+			  <a class="btn btn-primary btn-lg" role="button" href="http://github.com/dxdisrupt/rocket" target="_blank">Learn more &raquo;</a>
+			</p>
+		 </div>
+
+		 <!-- This is the Launch button.  We'll click this to launch the rocket.
+				It's click event handler get's wired up in the document.onready
+				function below -->
+		 <p>
+			<button id="buttonLaunch" type="button" class="btn btn-block btn-lg btn-danger">LAUNCH</button>
+		 </p>
+
+		 <!-- These divs are used to give feed back to the user while the rocket is launching or 
+				based on the success or failure of the launch  -->
+		 <div id="alertInfo" class="alert alert-info" role="alert">
+			<strong>LAUNCHING ROCKET!</strong> This will take about five seconds if everything works right, or up to thirty seconds if there is a problem. Please wait....
+		 </div>
+
+		 <div id="alertSuccess" class="alert alert-success" role="alert">
+			<strong>CONGRATULATIONS!</strong>: Your rocket should be flying high!
+		 </div>
+
+		 <div id="alertFailure" class="alert alert-danger" role="alert">
+			<strong>EPIC FAIL!</strong>: Something went wrong.  Make sure that you updated the Spark Core ID and Access Token in the source code, and that the Spark Core is on and breathing cyan.
+		 </div>
+
+
+
+	  </div> <!-- /container -->
+	  <!-- Bootstrap core JavaScript
+	  ================================================== -->
+	  <!-- Placed at the end of the document so the pages load faster -->
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	  <!-- Latest compiled and minified JavaScript -->
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+	  <script src="../../assets/js/docs.min.js"></script>
+	  <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/ie10-viewport-bug-workaround.min.js"></script>
+
+	  <script>
+
+		 $(document).ready(function () {
+			//wire up the button click event handler
+			$('#buttonLaunch').click(function () {
+			  //When the user clicks the button, call the launch method (defined below)
+			  launch();
+			});
+		 });
+
+		 //This function uses jQuery's ajax functionality to call the Spark Core REST API
+		 //and launch the rocket. Make sure to update the coreId and accessToken variables
+		 //with your values...
+		 launch = function () {
+			
+			/*
+			!!!!!!!!!!!!!!!!!!!! IMPORTANT !!!!!!!!!!!!!!!!!!!!
+
+			You need to update the coreId and accessToken variables with your Spark Core's 
+			Core ID and your account's Access Token. Refer to the following link if you 
+			need help finding those values: 
+			https://github.com/dxdisrupt/rocket#Task6
+			*/
+			var coreId = "PUT YOUR CORE ID HERE";
+			var accessToken = "PUT YOUR ACCESS TOKEN HERE";
+
+			//This builds the URL to the REST API endpoint for the cycleRelay function 
+			//with your given coreId
+			var url = "https://api.spark.io/v1/devices/" + coreId + "/cycleRelay";
+
+			//Turn on the alertInfo div to show the user that the rocket launch is being attempted
+			showAlerts("info");
+
+			//Make the Ajax Call
+			$.ajax({
+			  type: "POST",
+			  url: url,
+			  data: {
+				 access_token: accessToken,
+				 args: "r1,5000" //Fires relay 1 for 5 seconds to make sure all the air exits the launcher
+			  },
+			  complete: function (jqxhr, status) {
+				 //Figure out if the call was successful or not
+				 //The cycleRelay function should return a value of 1 if all was well
+				 //If we got anything else back, it failed. Use that knowledge to show
+				 //the appropriate alert div.
+				 var success = false;
+				 if (jqxhr.responseJSON.return_value === 1) {
+					showAlerts("success");
+				 } else {
+					showAlerts("failure");
+				 }
+			  }
+			});
+		 };
+
+		 //This uses the state argument values "info","success","failure" or "none"
+		 //to determine which of the alert divs (if any) to hide or show.
+		 showAlerts = function (state) {
+			switch (state) {
+			  case "info":
+				 $('#alertInfo').show();
+				 $('#alertSuccess').hide();
+				 $('#alertFailure').hide();
+				 break;
+			  case "success":
+				 $('#alertInfo').hide();
+				 $('#alertSuccess').show();
+				 $('#alertFailure').hide();
+				 break;
+			  case "failure":
+				 $('#alertInfo').hide();
+				 $('#alertSuccess').hide();
+				 $('#alertFailure').show();
+				 break;
+			  case "none":
+			  default:
+				 $('#alertInfo').hide();
+				 $('#alertSuccess').hide();
+				 $('#alertFailure').hide();
+				 break;
+			}
+		 };
+
+	  </script>
+	</body>
+	</html>
+	````
+
+
+1. Next, you need to replace some code in the file. On lines 102 and 103 (or thereabouts), you need to update the `coreId` and `accessToken` variables with the appropriate values for your Spark Core. For example, the Core ID and Access token used above would change: 
+
+	![08050-PlaceHolders](images/08050-placeholders.png?raw=true "Place Holders")
+
+	with
+
+	![08060-ReplacedValues](images/08060-replacedvalues.png?raw=true "Replaced Values")
+
+1. Now, from the Visual Studio toolbar clic the **"Save All"** button (if you are prompted for a location to save your .sln file, accept the default, or choose a path you prefer), then click the **"Debug"** button to debug the site in the browser:
+
+	![08070-DebugInBrowser](images/08070-debuginbrowser.png?raw=true "Debug In Browser")
+
+1. The page should open in the browser:
+
+	![08080-PageInBrowser](images/08080-pageinbrowser.png?raw=true "Page in Browser")
+
+1. Before launching, make sure that:
+
+	- you properly updated the `coreId` and `accessToken` variables as just described
+	- your spark core is powered on and breathing cyan
+	- you may NOT want the rocket actually on the launcher, you can verify that the site is working just by viewing the LEDs on the relay board.  It is up to you.
+
+1. When you are ready, click the **"LAUNCH"** button, and verify that the info message is displayed:
+
+	> **Note:** Watch the LED above your relay on the relay board to verify that it is activating.  Of course, if you had the launcher charged, and a rocket ready to launch, it should have launched now.  
+
+	![08090-InfoAlert](images/08090-infoalert.png?raw=true "Info Alert")
+
+1. Assuming everything worked, the success alert message should be shown:
+
+	![08100-SuccessAlert](images/08100-successalert.png?raw=true "Success Alert")
+
+1. Or if there were any problems, the failure alert will display:
+
+	- Verify the `coreId` and `accessToken` variable values
+	- Ensure that the Spark Core is powered on and breathing cyan
+	- Ensure that you properly flashed the relayWidget app to the Spark Core
+
+	![08110-FailureAlert](images/08110-failurealert.png?raw=true "Failure Alert")
+
+---
+
+<a name="Task9" />
+## Publishing your Web Site to Azure ##
+
+Cool, we are now launching the rocket from a web page, but it the page is running on our local development workstation.  If we'd like to be able to use that web page to fire the rocket from mobile device, or from anywhere else in the world, we need to get the web site up where people can access it from the Internet.  One of the easiest ways to do that is with an Azure Web Site.  
+
+> **Note:** In order to do this task, you will need a current, valid Azure subscription.  If you don't have one, you can create a free trial account at http://azure.microsoft.com 
+
+1. Ensure that the web site is open in Visual Studio
+
+1. In the **"Solution Explorer"** window, right click on the name of your web site, and select **"Publis Web Site"** from the pop-up menu:
+
+	![09010-PublishWebSiteMenu](images/09010-publishwebsitemenu.png?raw=true "Publish Web Site Menu Item")
+
+1. In the **"Publish Web"** window, select **"Microsoft Azure Web Sites"**:
+
+	![09020-SelectAzureWebSites](images/09020-selectazurewebsites.png?raw=true "Select Azure Web Sites")
+
+1. If you aren't already signed into your Azure account, click the **"Sign In..."** button, and when prompted, enter the credentials associated with the Azure subscription you want to use:
+
+	![09030-SignInIfNeeded](images/09030-signinifneeded.png?raw=true "Sign In if Needed")
+
+1. Once you are signed in, click the **"New..."** button to create a new Azure Web Site (or if you have already created the site you want to deploy to, you can select it from the drop-down list):
+
+	![09040-NewButton](images/09040-newbutton.png?raw=true "New Button")
+
+1. In the **"Create site on Microsoft Azure"** window, complete the fields, and click **"Create"**
+
+	- **Site name** must be a unique host name.
+	- **Subscription** should be the subscription you want to use
+	- **Region** should be a region near you
+	- **Database server** should be **No database** (this site doesn't use one)
+
+	![09050-CreateNewWebSite](images/09050-createnewwebsite.png?raw=true "Create New Web Site")
+
+1. On the **Publish Web"** page, accept the defaults (Visual Studio got these straight from Azure, so they should be correct), and click the **"Publish"** button:
+
+	![09060-Publish](images/09060-publish.png?raw=true "Publish")
+
+1. Back in Visual Studio, you can monitor your publish progress in the **"Output"** and **"Web Publish Activity"** windows:
+
+	![09070-OutputWindow](images/09070-outputwindow.png?raw=true "Output Window")
+
+	![09080-WebPublishActivity](images/09080-webpublishactivity.png?raw=true "Web Publish Activity Window")
+
+1. As long as the publish process completes successfully though, your new Azure Web Site should open in the browser:
+
+	![09090-SiteInAzure](images/09090-siteinazure.png?raw=true "Site in Azure")
+
+1.  You should now be able to open that site from anywhere, and use it to launch your rocket! So cool! For example, here it is running on a Windows Phone:
+
+	![09100-OnWindowsPhone](images/09100-onwindowsphone.png?raw=true "On Windows Phone!")
+
 ---
 
 <a name="summary" />
