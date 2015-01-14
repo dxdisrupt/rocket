@@ -99,6 +99,14 @@ The following schematic gives you the basics of the eletronics although the sche
 	![01015-AssembledTube](images/01015-assembledtube.png?raw=true "Assembled Tube")
 
 
+1. I added some disconnects between the sprinkler valve and the manual push button and spark core relay board assemblies.  This makes it easier to disconnect them for shipping.
+
+	![01016-DisconnectsDisconnected](images/01016-disconnectsdisconnected.png?raw=true "Disconnects Disconnected")
+
+1. Simply re-connect them if they are disconnected.  ***It doesn't matter which black wire connects to which white wire.  Either way is fine.*** 
+
+	![01017-DisconnectsConnected](images/01017-disconnectsconnected.png?raw=true "Disconnects Connected")
+
 1. You should now be able to push the pushbutton and hear the solenoid on the sprikler valve opening and closing (faintly).  If you hold your hand on the solendoid while you repeatedly push the button, you should also be able to feel the solenoid opening and closing. 
 
 1. Attach the **Bike Pump** (5) to the **Shrader Valve** (4).  Again, ensure a good connection. 
