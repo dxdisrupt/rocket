@@ -82,15 +82,17 @@ The following schematic gives you the basics of the eletronics although the sche
 <a name="Task1" />
 ## Assembling the Rocket Launcher ##
 
-1.  Attach the **Sprinkler Valve and Launch Tube** (3) to the **Compression Chamber** (2) using the using the threaded PVC tubing extending from the compression chamber and threading it into the bottom of the sprinkler valve. 
+1.  Attach the **Sprinkler Valve and Launch Tube** (3) to the **Compression Chamber** (1) using the using the threaded PVC tubing extending from the compression chamber and threading it into the bottom of the sprinkler valve. 
 
-	> **Note:** Be sure that you have it threaded on tightly.  If need be use some plumbers tape to help ensure a good seal.  If the seal here is not good, air will lead out. 
+	> **Note:** Be sure that you have it threaded on tightly.  If need be use some plumbers tape to help ensure a good seal.  If the seal here is not good, air will leak out. 
+
+1.  Attach the **Compression Chamber** (1) to the **Feet** (2) using .zip ties.  Tighten the zip ties enough to hold the compression chamber in place, but loose enough that you can still tilt the launch tube for aiming purposes. 
 
 1. **CAREFULLY** remove the cap with the button on it from the **"Manual Firing Button and 9v Power Supply"** by twisting it back and forth while pulling it away from the tube. 
 
 	> **Note:** If you are using my rocket, I just improved the connections inside the tube so you don't have to be AS CAREFUL, but you don't want to the yank the cap off and break the connections.
 
-1. Inside the tube, you should find the 9V Battery and the 9V battery connector.  Connect the battery to the snap connector, the re-insert the battery in the tube and replace the cap. 
+1. Inside the tube, you should find the 9V Battery and the 9V battery connector.  Connect the battery to the snap connector, then re-insert the battery in the tube and replace the cap. 
 
 	> **Note:** The 9V battery in the push button tube is what actually supplies the power for the sprinkler valve solenoid.  If you make sure to only have the battery connected when you are actively using the rocket, it should last for a very long time.  If you find that the Solenoid does not open when you push the button, you may try replacing the 9V battery in the tube. 
 
@@ -107,7 +109,7 @@ The following schematic gives you the basics of the eletronics although the sche
 
 	![01017-DisconnectsConnected](images/01017-disconnectsconnected.png?raw=true "Disconnects Connected")
 
-1. You should now be able to push the pushbutton and hear the solenoid on the sprikler valve opening and closing (faintly).  If you hold your hand on the solendoid while you repeatedly push the button, you should also be able to feel the solenoid opening and closing. 
+1. You should now be able to push the pushbutton and hear the solenoid on the sprinkler valve opening and closing (faintly).  If you hold your hand on the solendoid while you repeatedly push the button, you should also be able to feel the solenoid opening and closing. 
 
 1. Attach the **Bike Pump** (5) to the **Shrader Valve** (4).  Again, ensure a good connection. 
 
